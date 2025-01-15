@@ -1,14 +1,24 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { storeToRefs } from 'pinia';
+
+import { useRecipeStore } from '@/stores/recipe.ts';
+import RecipeCard from '@/components/RecipeCard/RecipeCard.vue';
+
+const recipeStore = useRecipeStore();
+const { recipes } = storeToRefs(recipeStore);
+
+recipeStore.getRecipes();
+</script>
 
 <template>
-  <div class="flex flex-col text-center">
+  <div class="flex flex-col text-center items-center justify-center">
     <h1 class="text-6xl pb-5 pt-10 max-w-lg">Find your favourite</h1>
     <h3 class="text-2xl max-w-lg">
       Search through the selection of recipes to find your favourite and build your own recipe
       collection.
     </h3>
 
-    <div class="flex flex-col mt-10 mb-4">
+    <div class="flex flex-col mt-10 mb-4 w-full max-w-lg">
       <!-- TODO: break out into own component -->
       <div class="max-w-lg">
         <div
@@ -25,6 +35,10 @@
       </div>
     </div>
     <!-- TODO: break out into own component -->
-    <div class="bg-red-200 w-100 max-w-5xl">Results</div>
+    <div v-if="recipes" class="w-100 max-w-5xl">
+      <div class="grid grid-cols-1 md:gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <RecipeCard v-for="recipe in recipes" :key="recipe.id" :recipe />
+      </div>
+    </div>
   </div>
 </template>
