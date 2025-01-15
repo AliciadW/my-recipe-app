@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import LandingPage from '../components/LandingPage/LandingPage.vue';
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
+  <main class="flex h-100 items-center justify-center">
+    <LandingPage />
   </main>
 </template>
