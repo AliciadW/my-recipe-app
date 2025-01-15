@@ -16,20 +16,12 @@ const { recipe } = storeToRefs(recipeStore);
 
 const pillButtons: PillButtonType[] = [
   {
-    content: recipe.cuisine,
+    content: recipe?.cuisine,
     type: 'cuisine',
-  },
-  {
-    content: recipe?.cookTimeMinutes,
-    type: 'cook-time',
   },
   {
     content: recipe?.servings,
     type: 'servings',
-  },
-  {
-    content: recipe?.prepTimeMinutes,
-    type: 'prep-time',
   },
   {
     content: recipe?.difficulty,
@@ -55,6 +47,9 @@ const pillButtons: PillButtonType[] = [
           :type="pillButton.type"
         />
       </div>
+
+      <h3 class="font-bold mb-1">Prep time: {{ recipe?.prepTimeMinutes }} minutes</h3>
+      <h3 class="font-bold mb-3">Cook time: {{ recipe?.cookTimeMinutes }} minutes</h3>
 
       <div class="mb-3">
         <h3 class="font-bold">Ingredients</h3>
