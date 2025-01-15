@@ -14,6 +14,11 @@ const router = createRouter({
       name: 'saved-recipes',
       component: () => import('../views/AboutView.vue'),
     },
+    {
+      path: '/recipe/:id',
+      name: 'selected-recipe',
+      component: () => import('../views/AboutView.vue'),
+    },
   ],
 });
 

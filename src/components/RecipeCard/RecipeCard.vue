@@ -1,9 +1,20 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+
 const props = defineProps(['recipe']);
+
+const router = useRouter();
+
+const goToRecipe = async (): Promise<void> => {
+  await router.push({ name: 'selected-recipe', params: { id: props.recipe.id } });
+};
 </script>
 
 <template>
-  <div class="flex flex-col rounded-md m-2 border-solid border border-slate-200">
+  <div
+    class="flex flex-col rounded-md m-2 border-solid border border-slate-200 cursor-pointer"
+    @click="goToRecipe"
+  >
     <img class="rounded-t-md" :src="recipe.image" alt="" />
     <div class="flex flex-col py-2 px-1">
       <h3 class="text-sm text-left font-bold">{{ recipe.name }}</h3>
@@ -24,5 +35,3 @@ const props = defineProps(['recipe']);
     </div>
   </div>
 </template>
-
-<style scoped></style>
