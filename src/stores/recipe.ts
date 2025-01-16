@@ -55,9 +55,17 @@ export const useRecipeStore = defineStore(
     };
 
     const toggleRecipeAsFavourite = async (id: string): Promise<void> => {
+      // update single recipe
       recipe.value.hasOwnProperty('favourite')
         ? (recipe.value['favourite'] = !recipe.value['favourite'])
         : (recipe.value['favourite'] = true);
+
+      // update recipe in recipes
+      recipes.value.find((recipe) => {
+        if (recipe.id === id) {
+          recipe.favourite = !recipe.favourite;
+        }
+      });
 
       if (recipe.value.favourite) {
         favouriteRecipes.value.push(recipe.value);

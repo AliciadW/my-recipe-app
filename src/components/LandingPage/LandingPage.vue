@@ -12,7 +12,10 @@ const route = useRoute();
 const recipeStore = useRecipeStore();
 const { recipes, favouriteRecipes } = storeToRefs(recipeStore);
 
-recipeStore.getRecipes();
+if (recipes.value.length === 0) {
+  // only make API call if we don't have any recipes yet
+  recipeStore.getRecipes();
+}
 
 const recipesToShow = computed<Recipe[]>(() => {
   return route.name === 'home' ? recipes.value : favouriteRecipes.value;
