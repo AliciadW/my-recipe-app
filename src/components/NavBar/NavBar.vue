@@ -17,7 +17,7 @@ interface NavigationItem {
 const route = useRoute();
 const navigation: NavigationItem[] = [
   { name: 'All recipes', href: '/', icon: ListBulletIcon },
-  { name: 'Favourites', href: '/favourites', icon: HeartIcon },
+  { name: 'Favourites', href: '/my-recipes', icon: HeartIcon },
 ];
 
 const mobileMenuOpen = ref<boolean>(false);

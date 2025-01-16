@@ -19,6 +19,11 @@ const router = createRouter({
       name: 'selected-recipe',
       component: () => import('../views/RecipeView.vue'),
     },
+    {
+      path: '/my-recipes',
+      name: 'myRecipes',
+      component: HomeView,
+    },
   ],
 });
 
