@@ -1,23 +1,17 @@
 <script setup lang="ts">
+import type { NavigationItem } from '@/types/ComponentTypes.ts';
+
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import { Dialog, DialogPanel } from '@headlessui/vue';
 import { Bars3Icon, XMarkIcon, HeartIcon, ListBulletIcon } from '@heroicons/vue/24/outline';
 
-import type { FunctionalComponent, HTMLAttributes, VNodeProps } from 'vue';
-
-// TODO: move to separate types file
-interface NavigationItem {
-  name: string;
-  href: string;
-  icon: FunctionalComponent<HTMLAttributes & VNodeProps>;
-}
-
 const route = useRoute();
+const router = useRouter();
 const navigation: NavigationItem[] = [
-  { name: 'All recipes', href: '/', icon: ListBulletIcon },
-  { name: 'Favourites', href: '/my-recipes', icon: HeartIcon },
+  { name: 'All recipes', routeName: 'home', icon: ListBulletIcon },
+  { name: 'Favourites', routeName: 'favourite-recipes', icon: HeartIcon },
 ];
 
 const mobileMenuOpen = ref<boolean>(false);
@@ -46,14 +40,15 @@ const mobileMenuOpen = ref<boolean>(false);
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <a
+        <p
           v-for="item in navigation"
           :key="item.name"
-          :href="item.href"
-          :class="{ 'text-indigo-600': route.path === item.href }"
-          class="text-sm/6 font-semibold text-gray-900"
-          >{{ item.name }}</a
+          :class="{ 'text-indigo-600': route.name === item.routeName }"
+          class="text-sm/6 font-semibold text-gray-900 cursor-pointer"
+          @click="router.push({ name: item.routeName })"
         >
+          {{ item.name }}
+        </p>
       </div>
     </nav>
     <Dialog class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
@@ -78,11 +73,11 @@ const mobileMenuOpen = ref<boolean>(false);
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6">
-              <a
+              <p
                 v-for="item in navigation"
                 :key="item.name"
-                :href="item.href"
-                class="group -mx-3 flex items-center gap-x-6 rounded-lg p-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                class="group -mx-3 flex items-center gap-x-6 rounded-lg p-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 cursor-pointer"
+                @click="router.push({ name: item.routeName })"
               >
                 <div
                   class="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white"
@@ -94,7 +89,7 @@ const mobileMenuOpen = ref<boolean>(false);
                   />
                 </div>
                 {{ item.name }}
-              </a>
+              </p>
             </div>
           </div>
         </div>
