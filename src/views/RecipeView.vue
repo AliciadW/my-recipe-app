@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import { useRecipeStore } from '@/stores/recipe.ts';
 
+import { HeartIcon } from '@heroicons/vue/24/solid';
 import PillButton from '@/components/basic/PillButton/PillButton.vue';
 
 const route = useRoute();
@@ -38,7 +39,20 @@ const pillButtons: PillButtonType[] = [
   <main class="flex h-100">
     <div class="flex flex-col">
       <h2 class="text-2xl mb-3">{{ recipe?.name }}</h2>
-      <img class="w-32 md:w-72 rounded-sm mb-3" :src="recipe?.image" alt="" />
+
+      <div
+        class="relative w-fit cursor-pointer"
+        @click="recipeStore.toggleRecipeAsFavourite(recipe?.id)"
+      >
+        <img class="w-32 md:w-72 rounded-sm mb-3" :src="recipe?.image" alt="" />
+        <div class="absolute top-2 right-2">
+          <HeartIcon
+            class="size-8 text-gray-500 relative"
+            :class="{ 'text-red-500': recipe?.favourite }"
+          />
+        </div>
+      </div>
+
       <div class="flex flex-wrap mb-3">
         <PillButton
           v-for="(pillButton, i) in pillButtons"

@@ -26,7 +26,26 @@ export const useRecipeStore = defineStore(
   () => {
     // refs - state
     const recipes = ref<Recipe[]>([]);
-    const recipe = ref<Recipe | null>(null);
+    const favouriteRecipes = ref<Recipe[]>([]);
+    const recipe = ref<Recipe>({
+      id: '',
+      name: '',
+      ingredients: [],
+      instructions: [],
+      prepTimeMinutes: 0,
+      cookTimeMinutes: 0,
+      servings: 0,
+      difficulty: '',
+      cuisine: '',
+      caloriesPerServing: 0,
+      tags: [],
+      userId: 0,
+      image: '',
+      rating: 0,
+      reviewCount: 0,
+      mealType: [],
+      favourite: false,
+    });
 
     // computed - getters
 
@@ -53,11 +72,27 @@ export const useRecipeStore = defineStore(
       }
     };
 
+    const toggleRecipeAsFavourite = async (id: string): Promise<void> => {
+      recipe.value.hasOwnProperty('favourite')
+        ? (recipe.value['favourite'] = !recipe.value['favourite'])
+        : (recipe.value['favourite'] = true);
+
+      if (recipe.value.favourite) {
+        favouriteRecipes.value.push(recipe.value);
+      } else {
+        favouriteRecipes.value = favouriteRecipes.value.filter((faveRecipe) => {
+          return faveRecipe.id != id;
+        });
+      }
+    };
+
     return {
       recipe,
       recipes,
+      favouriteRecipes,
       getRecipes,
       getSingleRecipe,
+      toggleRecipeAsFavourite,
     };
   },
   { persist: true },
