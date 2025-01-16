@@ -84,6 +84,7 @@ To keep the site simple, I opted against adding filters and the ability to selec
 - Improve error handling
 - Add unit tests
 - Add ability for the user to favourite a recipe from the landing page
+- Add loading modals when navigating
 
 ## See it in action
 
