@@ -17,19 +17,19 @@ const { recipe } = storeToRefs(recipeStore);
 
 const pillButtons: PillButtonType[] = [
   {
-    content: recipe?.cuisine,
+    content: recipe?.value.cuisine,
     type: 'cuisine',
   },
   {
-    content: recipe?.servings,
+    content: `Serves ${recipe?.value.servings}`,
     type: 'servings',
   },
   {
-    content: recipe?.difficulty,
+    content: recipe?.value.difficulty,
     type: 'difficulty',
   },
   {
-    content: `${recipe?.caloriesPerServing} calories`,
+    content: `${recipe?.value.caloriesPerServing} calories`,
     type: 'calories',
   },
 ];
@@ -77,5 +77,3 @@ const pillButtons: PillButtonType[] = [
     </div>
   </main>
 </template>
-
-<style scoped></style>
