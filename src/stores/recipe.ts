@@ -9,6 +9,7 @@ export const useRecipeStore = defineStore(
     // refs - state
     const recipes = ref<Recipe[]>([]);
     const favouriteRecipes = ref<Recipe[]>([]);
+    const searchResults = ref<Recipe[]>([]);
     const recipe = ref<Recipe>({
       id: '',
       name: '',
@@ -86,6 +87,7 @@ export const useRecipeStore = defineStore(
     return {
       recipe,
       recipes,
+      searchResults,
       favouriteRecipes,
       getRecipes,
       getSingleRecipe,

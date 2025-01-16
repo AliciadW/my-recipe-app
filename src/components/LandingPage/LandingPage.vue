@@ -2,24 +2,37 @@
 import type { Recipe } from '@/types/RecipeTypes.ts';
 
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useRecipeStore } from '@/stores/recipe.ts';
 import RecipeCard from '@/components/RecipeCard/RecipeCard.vue';
+import SearchInput from '@/components/SearchInput/SearchInput.vue';
 
 const route = useRoute();
 const recipeStore = useRecipeStore();
-const { recipes, favouriteRecipes } = storeToRefs(recipeStore);
+const { recipes, favouriteRecipes, searchResults } = storeToRefs(recipeStore);
 
 if (recipes.value.length === 0) {
   // only make API call if we don't have any recipes yet
   recipeStore.getRecipes();
 }
 
+const homeRecipes = ref<Recipe[]>(recipes.value);
+
 const recipesToShow = computed<Recipe[]>(() => {
-  return route.name === 'home' ? recipes.value : favouriteRecipes.value;
+  return route.name === 'home' ? homeRecipes.value : favouriteRecipes.value;
 });
+
+watch(
+  searchResults.value,
+  () => {
+    searchResults.value.length > 0
+      ? (homeRecipes.value = searchResults.value)
+      : (homeRecipes.value = recipes.value);
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
@@ -33,22 +46,8 @@ const recipesToShow = computed<Recipe[]>(() => {
       }}
     </h3>
 
-    <div class="flex flex-col mt-10 mb-4 w-full max-w-lg">
-      <!-- TODO: break out into own component -->
-      <div class="max-w-lg">
-        <div
-          class="flex rounded-md bg-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
-        >
-          <input
-            type="text"
-            name="search"
-            id="search"
-            placeholder="Search"
-            class="block min-w-0 grow px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
-          />
-        </div>
-      </div>
-    </div>
+    <SearchInput />
+
     <!-- TODO: break out into own component -->
     <div class="flex flex-col">
       <div v-if="recipesToShow.length > 0" class="w-100 max-w-5xl">
