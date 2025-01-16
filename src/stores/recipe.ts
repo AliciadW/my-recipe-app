@@ -68,8 +68,15 @@ export const useRecipeStore = defineStore(
       });
 
       if (recipe.value.favourite) {
+        // add to favourite recipes
         favouriteRecipes.value.push(recipe.value);
+
+        // make sure we do not have duplicates
+        favouriteRecipes.value = favouriteRecipes.value.filter((id, index) => {
+          return favouriteRecipes.value.indexOf(id) === index;
+        });
       } else {
+        // remove from favourite recipes
         favouriteRecipes.value = favouriteRecipes.value.filter((faveRecipe) => {
           return faveRecipe.id != id;
         });
