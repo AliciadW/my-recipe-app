@@ -1,21 +1,33 @@
 <script setup lang="ts">
+import type { Recipe } from '@/types/RecipeTypes.ts';
+
 import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 import { useRecipeStore } from '@/stores/recipe.ts';
 import RecipeCard from '@/components/RecipeCard/RecipeCard.vue';
 
+const route = useRoute();
 const recipeStore = useRecipeStore();
-const { recipes } = storeToRefs(recipeStore);
+const { recipes, favouriteRecipes } = storeToRefs(recipeStore);
 
 recipeStore.getRecipes();
+
+const recipesToShow = computed<Recipe[]>(() => {
+  return route.name === 'home' ? recipes.value : favouriteRecipes.value;
+});
 </script>
 
 <template>
-  <div class="flex flex-col text-center items-center justify-center">
+  <div class="flex flex-col text-center items-center justify-center w-full">
     <h1 class="text-6xl pb-5 pt-10 max-w-lg">Find your favourite</h1>
     <h3 class="text-2xl max-w-lg">
-      Search through the selection of recipes to find your favourite and build your own recipe
-      collection.
+      {{
+        route.name === 'favourite-recipes'
+          ? 'Search your favourite recipes.'
+          : 'Search through the selection of recipes to find your favourite and build your own recipe collection.'
+      }}
     </h3>
 
     <div class="flex flex-col mt-10 mb-4 w-full max-w-lg">
@@ -35,9 +47,14 @@ recipeStore.getRecipes();
       </div>
     </div>
     <!-- TODO: break out into own component -->
-    <div v-if="recipes" class="w-100 max-w-5xl">
-      <div class="grid grid-cols-1 md:gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <RecipeCard v-for="recipe in recipes" :key="recipe.id" :recipe />
+    <div class="flex flex-col">
+      <div v-if="recipesToShow.length > 0" class="w-100 max-w-5xl">
+        <div class="grid grid-cols-1 md:gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <RecipeCard v-for="recipe in recipesToShow" :key="recipe.id" :recipe />
+        </div>
+      </div>
+      <div v-else-if="route.name === 'favourite-recipes'">
+        You have not favourited any recipes yet.
       </div>
     </div>
   </div>
