@@ -7,6 +7,8 @@ export const useRecipeStore = defineStore(
   'recipe',
   () => {
     // refs - state
+    const noResults = ref<boolean>(false);
+    const noResponse = ref<boolean>(false);
     const recipes = ref<Recipe[]>([]);
     const favouriteRecipes = ref<Recipe[]>([]);
     const searchResults = ref<Recipe[]>([]);
@@ -36,22 +38,43 @@ export const useRecipeStore = defineStore(
     const getRecipes = async (): Promise<void> => {
       const response = await fetch('https://dummyjson.com/recipes');
 
-      if (response) {
+      if (response.status === 200) {
         const recipesResponse = await response.json();
 
         recipes.value = recipesResponse.recipes;
       } else {
         // handle no response
+        noResponse.value = true;
       }
     };
 
     const getSingleRecipe = async (id: string): Promise<void> => {
       const response = await fetch(`https://dummyjson.com/recipes/${id}`);
 
-      if (response) {
+      if (response.status === 200) {
         recipe.value = await response.json();
       } else {
         // handle no response
+        noResponse.value = true;
+        recipe.value = {
+          id: '',
+          name: '',
+          ingredients: [],
+          instructions: [],
+          prepTimeMinutes: 0,
+          cookTimeMinutes: 0,
+          servings: 0,
+          difficulty: '',
+          cuisine: '',
+          caloriesPerServing: 0,
+          tags: [],
+          userId: 0,
+          image: '',
+          rating: 0,
+          reviewCount: 0,
+          mealType: [],
+          favourite: false,
+        };
       }
     };
 
@@ -85,6 +108,8 @@ export const useRecipeStore = defineStore(
     };
 
     return {
+      noResponse,
+      noResults,
       recipe,
       recipes,
       searchResults,

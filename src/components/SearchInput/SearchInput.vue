@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia';
 import { useRecipeStore } from '@/stores/recipe.ts';
 
 const recipeStore = useRecipeStore();
-const { recipes, searchResults } = storeToRefs(recipeStore);
+const { recipes, searchResults, noResults } = storeToRefs(recipeStore);
 
 const searchTerm = ref<string>('');
 
@@ -14,6 +14,10 @@ watch(
   () => {
     // initiate search only once 3 characters are entered
     if (searchTerm.value.length >= 3) {
+      // reset results
+      noResults.value = false;
+      searchResults.value = [];
+
       // search through recipes to find matching names
       // search through recipes to find matching ingredients
       setTimeout(() => {
@@ -28,12 +32,14 @@ watch(
             searchResults.value = searchResults.value.filter((value, index, arr) => {
               return arr.findIndex((result) => result.id === value.id) === index;
             });
-          } else {
-            return;
           }
         });
       }, 500);
-    } else if (searchTerm.value === '') {
+    }
+
+    if (searchTerm.value === '') {
+      // reset no results
+      noResults.value = false;
       searchResults.value = [];
     }
   },
