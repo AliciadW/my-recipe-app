@@ -1,4 +1,4 @@
 export interface PillButtonType {
-  content?: string;
+  content?: string | number;
   type?: string;
 }
