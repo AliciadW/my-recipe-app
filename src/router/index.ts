@@ -10,9 +10,9 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/saved',
-      name: 'saved-recipes',
-      component: () => import('../views/AboutView.vue'),
+      path: '/favourites',
+      name: 'favourite-recipes',
+      component: () => import('../views/FavouritesView.vue'),
     },
     {
       path: '/recipe/:id',

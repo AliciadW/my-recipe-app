@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { Dialog, DialogPanel } from '@headlessui/vue';
-import { Bars3Icon, XMarkIcon, BookmarkIcon, ListBulletIcon } from '@heroicons/vue/24/outline';
+import { Bars3Icon, XMarkIcon, HeartIcon, ListBulletIcon } from '@heroicons/vue/24/outline';
 
 import type { FunctionalComponent, HTMLAttributes, VNodeProps } from 'vue';
 
@@ -17,7 +17,7 @@ interface NavigationItem {
 const route = useRoute();
 const navigation: NavigationItem[] = [
   { name: 'All recipes', href: '/', icon: ListBulletIcon },
-  { name: 'Saved', href: '/saved', icon: BookmarkIcon },
+  { name: 'Favourites', href: '/favourites', icon: HeartIcon },
 ];
 
 const mobileMenuOpen = ref<boolean>(false);
