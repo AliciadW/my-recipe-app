@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { useRecipeStore } from '@/stores/recipe.ts';
+
 import FavouriteButton from '@/components/FavouriteButton/FavouriteButton.vue';
 
 const props = defineProps(['recipe']);
 
 const router = useRouter();
+const recipeStore = useRecipeStore();
 
 const goToRecipe = async (): Promise<void> => {
   await router.push({ name: 'selected-recipe', params: { id: props.recipe.id } });
+
+  recipeStore.searchResults = [];
 };
 </script>
 
