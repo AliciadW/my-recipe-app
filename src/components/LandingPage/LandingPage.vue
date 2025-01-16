@@ -25,7 +25,7 @@ const recipesToShow = computed<Recipe[]>(() => {
 });
 
 watch(
-  searchResults.value,
+  searchResults,
   () => {
     searchResults.value.length > 0
       ? (homeRecipes.value = searchResults.value)

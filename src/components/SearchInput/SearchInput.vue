@@ -9,30 +9,36 @@ const { recipes, searchResults } = storeToRefs(recipeStore);
 
 const searchTerm = ref<string>('');
 
-watch(searchTerm, () => {
-  // initiate search only once 3 characters are entered
-  if (searchTerm.value.length > 2) {
-    // search through recipes to find matching names
-    // search through recipes to find matching ingredients
-    recipes.value.find((recipe) => {
-      const searchWord = searchTerm.value.toLowerCase();
-      const name = recipe.name.toLocaleLowerCase();
-      const ingredients = recipe.ingredients.toString().toLocaleLowerCase();
+watch(
+  searchTerm,
+  () => {
+    // initiate search only once 3 characters are entered
+    if (searchTerm.value.length >= 3) {
+      // search through recipes to find matching names
+      // search through recipes to find matching ingredients
+      setTimeout(() => {
+        recipes.value.find((recipe) => {
+          const searchWord = searchTerm.value.toLowerCase();
+          const name = recipe.name.toLocaleLowerCase();
+          const ingredients = recipe.ingredients.toString().toLocaleLowerCase();
 
-      if (name.includes(searchWord) || ingredients.includes(searchWord)) {
-        searchResults.value.push(recipe);
+          if (name.includes(searchWord) || ingredients.includes(searchWord)) {
+            searchResults.value.push(recipe);
 
-        searchResults.value = searchResults.value.filter((value, index, arr) => {
-          return arr.findIndex((result) => result.id === value.id) === index;
+            searchResults.value = searchResults.value.filter((value, index, arr) => {
+              return arr.findIndex((result) => result.id === value.id) === index;
+            });
+          } else {
+            return;
+          }
         });
-      } else {
-        return;
-      }
-    });
-  } else if (searchTerm.value === '') {
-    searchResults.value = [];
-  }
-});
+      }, 500);
+    } else if (searchTerm.value === '') {
+      searchResults.value = [];
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <template>

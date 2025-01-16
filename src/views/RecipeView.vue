@@ -11,9 +11,11 @@ import FavouriteButton from '@/components/FavouriteButton/FavouriteButton.vue';
 const route = useRoute();
 const recipeStore = useRecipeStore();
 
-recipeStore.getSingleRecipe(route.params.id as string);
-
 const { recipe } = storeToRefs(recipeStore);
+
+if (recipe.value && recipe.value.id != route.params.id) {
+  recipeStore.getSingleRecipe(route.params.id as string);
+}
 
 const pillButtons: PillButtonType[] = [
   {

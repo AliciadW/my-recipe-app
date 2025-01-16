@@ -63,7 +63,7 @@ export const useRecipeStore = defineStore(
 
       // update recipe in recipes
       recipes.value.find((recipe) => {
-        if (recipe.id === id) {
+        if (recipe.id == id) {
           recipe.favourite = !recipe.favourite;
         }
       });
