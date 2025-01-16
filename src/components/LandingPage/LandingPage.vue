@@ -11,7 +11,7 @@ import SearchInput from '@/components/SearchInput/SearchInput.vue';
 
 const route = useRoute();
 const recipeStore = useRecipeStore();
-const { recipes, favouriteRecipes, searchResults, noResults, noResponse, loading } =
+const { recipes, favouriteRecipes, searchResults, noResults, noResponse } =
   storeToRefs(recipeStore);
 
 onBeforeMount(async () => {
@@ -49,34 +49,31 @@ watch(recipes, () => {
     </template>
 
     <template v-else>
-      <template v-if="loading">...</template>
-      <template v-else>
-        <h1 class="text-6xl pb-5 pt-10 max-w-lg">Find your favourite</h1>
-        <h2 class="text-2xl max-w-lg mb-2">
-          {{
-            route.name === 'favourite-recipes'
-              ? 'Browse your favourite recipes.'
-              : 'Search through the selection of recipes to find your favourite and build your own recipe collection.'
-          }}
-        </h2>
+      <h1 class="text-6xl pb-5 pt-10 max-w-lg">Find your favourite</h1>
+      <h2 class="text-2xl max-w-lg mb-2">
+        {{
+          route.name === 'favourite-recipes'
+            ? 'Browse your favourite recipes.'
+            : 'Search through the selection of recipes to find your favourite and build your own recipe collection.'
+        }}
+      </h2>
 
-        <SearchInput v-if="route.name === 'home'" />
+      <SearchInput v-if="route.name === 'home'" />
 
-        <!-- TODO: break out into own component -->
-        <div class="flex flex-col">
-          <div v-if="recipesToShow.length > 0 && !noResults" class="w-100 max-w-5xl">
-            <div class="grid grid-cols-1 md:gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <RecipeCard v-for="recipe in recipesToShow" :key="recipe.id" :recipe />
-            </div>
-          </div>
-          <div v-else-if="noResults && route.name === 'home'">
-            We couldn't find anything, please update your search term.
-          </div>
-          <div v-else-if="route.name === 'favourite-recipes'">
-            You have not favourited any recipes yet.
+      <!-- TODO: break out into own component -->
+      <div class="flex flex-col">
+        <div v-if="recipesToShow.length > 0 && !noResults" class="w-100 max-w-5xl">
+          <div class="grid grid-cols-1 md:gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <RecipeCard v-for="recipe in recipesToShow" :key="recipe.id" :recipe />
           </div>
         </div>
-      </template>
+        <div v-else-if="noResults && route.name === 'home'">
+          We couldn't find anything, please update your search term.
+        </div>
+        <div v-else-if="route.name === 'favourite-recipes'">
+          You have not favourited any recipes yet.
+        </div>
+      </div>
     </template>
   </div>
 </template>

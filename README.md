@@ -61,7 +61,7 @@ While working on this project I decided to include the following tools, packages
 
 ## API
 
-I opted to use an API to get a list of recipes. THe one I ended up making use of is by DummyJSON and can be found [here] (https://dummyjson.com/docs/recipes#recipes-tag). 
+I opted to use an API to get a list of recipes. The one I ended up making use of is by DummyJSON and can be found [here] (https://dummyjson.com/docs/recipes#recipes-tag). 
 
 I ended up only using the recipes endpoint to get a list of recipes, then store this in the store from where I then manipulated the data.
 
