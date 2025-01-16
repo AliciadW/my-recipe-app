@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import FavouriteButton from '@/components/FavouriteButton/FavouriteButton.vue';
 
 const props = defineProps(['recipe']);
 
@@ -12,10 +13,12 @@ const goToRecipe = async (): Promise<void> => {
 
 <template>
   <div
-    class="flex flex-col rounded-md m-2 border-solid border border-slate-200 cursor-pointer"
+    class="flex flex-col rounded-md m-2 border-solid border border-slate-200 cursor-pointer relative"
     @click="goToRecipe"
   >
     <img class="rounded-t-md" :src="recipe.image" alt="" />
+    <FavouriteButton :id="recipe.id" :favourite="recipe.favourite" :inactive="true" />
+
     <div class="flex flex-col py-2 px-1">
       <h3 class="text-sm text-left font-bold">{{ recipe.name }}</h3>
       <div class="flex flex-wrap">
