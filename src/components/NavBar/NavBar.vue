@@ -73,7 +73,7 @@ const mobileMenuOpen = ref<boolean>(false);
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
             <div class="space-y-2 py-6">
-              <p
+              <div
                 v-for="item in navigation"
                 :key="item.name"
                 class="group -mx-3 flex items-center gap-x-6 rounded-lg p-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50 cursor-pointer"
@@ -89,7 +89,7 @@ const mobileMenuOpen = ref<boolean>(false);
                   />
                 </div>
                 {{ item.name }}
-              </p>
+              </div>
             </div>
           </div>
         </div>

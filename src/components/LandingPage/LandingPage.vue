@@ -62,7 +62,7 @@ watch(recipes, () => {
 
       <!-- TODO: break out into own component -->
       <div class="flex flex-col">
-        <div v-if="recipesToShow.length > 0 && !noResults" class="w-100 max-w-5xl">
+        <div v-if="recipesToShow.length > 0 && !noResults">
           <div class="grid grid-cols-1 md:gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <RecipeCard v-for="recipe in recipesToShow" :key="recipe.id" :recipe />
           </div>
