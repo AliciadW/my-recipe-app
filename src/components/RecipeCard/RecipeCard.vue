@@ -27,16 +27,16 @@ const goToRecipe = async (): Promise<void> => {
     <div class="flex flex-col py-2 px-1">
       <h3 class="text-sm text-left font-bold">{{ recipe.name }}</h3>
       <div class="flex flex-wrap">
-        <div class="rounded-full text-xs bg-indigo-200 py-1 px-1.5 mr-1 mt-1">
+        <div class="rounded-full text-xs bg-indigo-200 py-1 px-3 mr-1 mt-1">
           <p>{{ recipe.difficulty }}</p>
         </div>
-        <div class="rounded-full text-xs bg-indigo-200 py-1 px-1.5 mr-1 mt-1">
+        <div class="rounded-full text-xs bg-indigo-200 py-1 px-3 mr-1 mt-1">
           <p>Ready in {{ recipe.cookTimeMinutes + recipe.prepTimeMinutes }} minutes</p>
         </div>
-        <div class="rounded-full text-xs bg-indigo-200 py-1 px-1.5 mr-1 mt-1">
+        <div class="rounded-full text-xs bg-indigo-200 py-1 px-3 mr-1 mt-1">
           <p>Serves: {{ recipe.servings }}</p>
         </div>
-        <div class="rounded-full text-xs bg-indigo-200 py-1 px-1.5 mr-1 mt-1">
+        <div class="rounded-full text-xs bg-indigo-200 py-1 px-3 mr-1 mt-1">
           <p>{{ recipe.cuisine }}</p>
         </div>
       </div>
